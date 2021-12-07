@@ -1,4 +1,4 @@
 export interface ITodo {
-    description : string,
-    isDone : boolean
+    description? : string,
+    isDone? : boolean
 }
