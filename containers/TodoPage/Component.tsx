@@ -1,14 +1,18 @@
 import * as Styled from "./style";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import Head from "next/head";
 import Todo from "../../components/Todo";
 import { ITodo } from "../../interfaces/itodos";
 
 const Component = () => {
   const [todos, setTodos] = useState<ITodo[]>([
-    { description: "Let's add a task", isDone: false },
+    {
+      id: new Date().getMilliseconds().toString(),
+      description: "Let's add a task",
+      isDone: false,
+    },
   ]);
-  
+
   const [newTodo, setNewTodo] = useState<string>("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,25 +21,50 @@ const Component = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Unable to add task if newTodo is an empty string
-    if(!newTodo){
-        return;
+    if (!newTodo) {
+      return;
     }
 
     addTodo();
-    setNewTodo('');
+    setNewTodo("");
   };
 
   const addTodo = () => {
-    setTodos([...todos, { description: newTodo, isDone: false }]);
+    setTodos([
+      ...todos,
+      {
+        id: new Date().getMilliseconds().toString(),
+        description: newTodo,
+        isDone: false,
+      },
+    ]);
   };
 
-  const removeTodo = (id : number) => {
-    // Filtering todo that has different id with the index 
-    const filteredTodos = todos.filter((element, index) => index != id);
-    setTodos([...filteredTodos])
-  }
+  const removeTodo = (id: string): void => {
+    // Filtering todo that has different id with the index
+    const filteredTodos = todos.filter((todo) => todo.id !== id);
+    console.log(filteredTodos);
+    setTodos([...filteredTodos]);
+  };
+
+  const updateTodo = (id: string): void => {
+    const updatedTodos: ITodo[] = [];
+
+    todos.forEach((todo: ITodo) => {
+      if (todo.id === id) {
+        updatedTodos.push({
+          id,
+          description: newTodo,
+          isDone: false,
+        });
+      }
+      updatedTodos.push(todo);
+    });
+
+    setTodos([...updatedTodos]);
+  };
 
   return (
     <>
@@ -49,13 +78,15 @@ const Component = () => {
           <Styled.AddTodoButton> Add Todo </Styled.AddTodoButton>
         </form>
         <Styled.Todos>
-          {todos.map((todo, index) => {
+          {todos.map((todo: ITodo) => {
             return (
               <Todo
-                key={index}
+                key={todo.id}
+                id={todo.id}
                 description={todo.description}
                 isDone={todo.isDone}
                 removeTodo={removeTodo}
+                updateTodo={updateTodo}
               />
             );
           })}

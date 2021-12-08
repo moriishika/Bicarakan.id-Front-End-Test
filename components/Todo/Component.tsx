@@ -1,10 +1,10 @@
 import * as Styled from "./style";
-import { ITodo } from "../../interfaces/itodos";
-const Component = ({ description, isDone }: ITodo) => {
+import { ITodoCardProps } from "../../interfaces/itodos";
+const Component = ({ id, description, isDone, removeTodo, updateTodo }: ITodoCardProps) => {
   return (
-    <Styled.TodoCard>
-      <Styled.DeleteButton>x</Styled.DeleteButton>
-      <p>{description}</p>
+    <Styled.TodoCard id={id} description={description} isDone={isDone}>
+      <Styled.DeleteButton onClick={() => removeTodo(id)}>x</Styled.DeleteButton>
+      <Styled.Description value={description} onChange={() => updateTodo(id)}/>
       <p>Status : {isDone ? "Done" : "On work"}</p>
     </Styled.TodoCard>
   );

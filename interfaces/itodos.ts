@@ -1,5 +1,10 @@
 export interface ITodo {
-    description? : string,
-    isDone? : boolean,
-    removeTodo? : (id : number) => void
+  id: string;
+  description: string;
+  isDone: boolean;
+}
+
+export interface ITodoCardProps extends ITodo{
+  removeTodo: (id: string) => void;
+  updateTodo: (id: string) => void;
 }

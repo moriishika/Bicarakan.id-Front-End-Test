@@ -15,4 +15,10 @@ export const TodoCard = styled.div<ITodo>`
 
 export const DeleteButton = styled.button`
     font-weight: 600;
+    position: relative;
+    right: 0;
+`
+
+export const Description = styled.input`
+    all : unset;
 `
