@@ -71,7 +71,7 @@ const Component = () => {
       if (todo.id === id && updatedTodo) {
         //change the status isDone to true if false and vice verca
         updatedTodo.isDone = updatedTodo.isDone ? false : true;
-        // overlap the data with the new one based on the index
+        // overlap the selected data by index with the new one 
         updatedTodos[index] = updatedTodo;
         setTodos([...updatedTodos]);
       }
@@ -106,27 +106,30 @@ const Component = () => {
   const sortAlphabetically = (): void => {
     const alphabeticallyTodos : ITodo[] = [...todos];
 
+    //sort will turn the element into string where the criteria is based from UTF-16 sequences
     alphabeticallyTodos.sort((a, b) => {
       const todoA = a.description.toLowerCase();
       const todoB = b.description.toLowerCase();
-
+      
+      // if TodoA point is less than TodoB 
       if (todoA < todoB) {
+        // todoB will be sorted first
         return -1;
       }
 
+      // if TodoB point is less than TodoA
       if (todoB > todoA) {
+        //todoA will be sorted first
         return 1;
       }
 
+      // if it's equal the order of TodoA and TodoB will be just like the original
       return 0;
     });
 
     setTodos([...alphabeticallyTodos]);
   };
 
-  useEffect(() => {
-    console.log('Todo : ', todos);
-  }, [todos]);
 
   return (
     <>
@@ -134,10 +137,10 @@ const Component = () => {
         <title>Todo App Test</title>
       </Head>
       <Styled.Container>
-        <Styled.Title>Your Task Today</Styled.Title>
+        <Styled.Title>Your Task Today 📅</Styled.Title>
         <form onSubmit={handleSubmit}>
-          <input type="text" value={newTodo} onChange={handleChange} />
-          <Styled.AddTodoButton> Add Todo </Styled.AddTodoButton>
+          <Styled.TaskInput type="text" placeholder="Add Your Task Here"  value={newTodo} onChange={handleChange} />
+          <Styled.AddTodoButton> Add </Styled.AddTodoButton>
         </form>
 
         <Styled.SorterButtons>

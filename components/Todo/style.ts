@@ -2,18 +2,18 @@ import styled from "styled-components";
 import { ITodo } from "../../interfaces/itodos";
 
 export const TodoCard = styled.div<ITodo>`
-  background-color: ${({ isDone }) => (isDone ? "#1B2534" : "#3882F2")};
+  background-color: ${({ isDone }) => (isDone ? "#46474A" : "#3882F2")};
   color: ${({ isDone }) => (isDone ? "#706969" : "white")};
   padding: 20px;
   transition: 0.5s;
-  margin: 20px;
+  margin: 25px;
   overflow: hidden;
   resize: none;
   border-radius : 15px;
-  box-shadow: rgba(72, 136, 235, 0.4) 0px 20px 30px;
+  box-shadow: ${({ isDone }) => (isDone ? "rgba(50, 57, 58, 0.3) 0px 20px 30px" : "rgba(72, 136, 235, 0.4) 0px 20px 30px")};
   &:hover {
     cursor: pointer;
-    background-color: #005fef;
+    background-color: ${({ isDone }) => (isDone ? "#1B2534" : "#005fef")};
   }
 `;
 
