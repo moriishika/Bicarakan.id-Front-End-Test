@@ -6,5 +6,6 @@ export interface ITodo {
 
 export interface ITodoCardProps extends ITodo{
   removeTodo: (id: string) => void;
-  updateTodo: (id: string) => void;
+  updateTodo: (id: string, description: string) => void;
+  setDoneStatus : (id: string) => void;
 }

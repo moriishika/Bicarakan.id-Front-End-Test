@@ -5,21 +5,15 @@ import Todo from "../../components/Todo";
 import { ITodo } from "../../interfaces/itodos";
 
 const Component = () => {
-  const [todos, setTodos] = useState<ITodo[]>([
-    {
-      id: new Date().getMilliseconds().toString(),
-      description: "Let's add a task",
-      isDone: false,
-    },
-  ]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
 
   const [newTodo, setNewTodo] = useState<string>("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodo(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     // Unable to add task if newTodo is an empty string
@@ -45,25 +39,44 @@ const Component = () => {
   const removeTodo = (id: string): void => {
     // Filtering todo that has different id with the index
     const filteredTodos = todos.filter((todo) => todo.id !== id);
-    console.log(filteredTodos);
     setTodos([...filteredTodos]);
   };
 
-  const updateTodo = (id: string): void => {
+  const updateTodo = (id: string, description: string): void => {
     const updatedTodos: ITodo[] = [];
 
     todos.forEach((todo: ITodo) => {
+      //looking up for todo with the same id if it there, push the new updated todo
       if (todo.id === id) {
         updatedTodos.push({
           id,
-          description: newTodo,
+          description: description,
           isDone: false,
         });
+      } else {
+        //if not push the previous todo
+        updatedTodos.push(todo);
       }
-      updatedTodos.push(todo);
     });
 
     setTodos([...updatedTodos]);
+  };
+
+  const setDoneStatus = (id: string): void => {
+    const updatedTodos: ITodo[] = [...todos];
+    const updatedTodo = todos.find(todo => todo.id === id );
+
+    updatedTodos.forEach((todo: ITodo, index) => {
+        //looking up for the same id and check if there is a data inside updatedTodo
+        if (todo.id === id && updatedTodo) {
+            //change the status isDone to true if false and vice verca
+            updatedTodo.isDone = updatedTodo.isDone ? false : true;
+            // overlap the data with the new one based on the index
+            updatedTodos[index] = updatedTodo;
+            setTodos([...updatedTodos]);
+        } 
+      });
+
   };
 
   return (
@@ -78,6 +91,11 @@ const Component = () => {
           <Styled.AddTodoButton> Add Todo </Styled.AddTodoButton>
         </form>
         <Styled.Todos>
+          {/* if there is no task a text will be shown */}
+          {!todos.length && (
+            <Styled.EmptyTask>No Task Available</Styled.EmptyTask>
+          )}
+
           {todos.map((todo: ITodo) => {
             return (
               <Todo
@@ -87,6 +105,7 @@ const Component = () => {
                 isDone={todo.isDone}
                 removeTodo={removeTodo}
                 updateTodo={updateTodo}
+                setDoneStatus={setDoneStatus}
               />
             );
           })}

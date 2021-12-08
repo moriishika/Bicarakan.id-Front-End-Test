@@ -5,6 +5,7 @@ export const Container = styled.div`
     height : 100%;
     display : flex;
     justify-content : center;
+    align-items: center;
     flex-direction: column;
 `
 
@@ -15,10 +16,11 @@ export const Title = styled.h1`
 
 export const Todos = styled.div`
     display: flex;
+    justify-content : center;
     flex-wrap: wrap;
     width: 100%;
     padding: 5px;
-    background-color: red;
+    margin-top : 40px;
 `
 
 export const AddTodoButton  = styled.button`
@@ -27,4 +29,9 @@ export const AddTodoButton  = styled.button`
     background-color: red;
     color: white;
     margin: 5px;
+`
+
+export const EmptyTask = styled(Title)`
+    font-size : 30px;
+    width : 100%;
 `

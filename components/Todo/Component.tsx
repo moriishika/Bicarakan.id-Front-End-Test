@@ -1,11 +1,32 @@
 import * as Styled from "./style";
 import { ITodoCardProps } from "../../interfaces/itodos";
-const Component = ({ id, description, isDone, removeTodo, updateTodo }: ITodoCardProps) => {
+import { ChangeEvent } from "react";
+
+const Component = ({
+  id,
+  description,
+  isDone,
+  removeTodo,
+  updateTodo,
+  setDoneStatus
+}: ITodoCardProps) => {
+
+  const handleChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
+    // expand the height of the textarea by taking the height from scroll height and set the max size of it
+    target.style.height = Math.min(target.scrollHeight, 100) + "px";
+    updateTodo(id, target.value);
+  };
+
   return (
     <Styled.TodoCard id={id} description={description} isDone={isDone}>
-      <Styled.DeleteButton onClick={() => removeTodo(id)}>x</Styled.DeleteButton>
-      <Styled.Description value={description} onChange={() => updateTodo(id)}/>
-      <p>Status : {isDone ? "Done" : "On work"}</p>
+      <Styled.HorizontalBox>
+        <Styled.Button onClick={() => removeTodo(id)}>🗑️</Styled.Button>
+        <Styled.Button onClick={() => setDoneStatus(id)}>{isDone ? '🔁' : '✔️'}</Styled.Button>
+      </Styled.HorizontalBox>
+      <Styled.VerticalBox>
+        <Styled.Description value={description} onChange={handleChange} />
+        <Styled.StatusText>Status : {isDone ? "Done" : "On work"}</Styled.StatusText>
+      </Styled.VerticalBox>
     </Styled.TodoCard>
   );
 };
