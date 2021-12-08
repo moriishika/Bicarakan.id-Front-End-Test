@@ -5,7 +5,6 @@ export const Container = styled.div`
     height : 100%;
     display : flex;
     justify-content : center;
-    align-items : center;
     flex-direction: column;
 `
 
@@ -17,7 +16,15 @@ export const Title = styled.h1`
 export const Todos = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin: 10px;
-    width: 95%;
+    width: 100%;
+    padding: 5px;
     background-color: red;
+`
+
+export const AddTodoButton  = styled.button`
+    width: 100px;
+    height: 40px;
+    background-color: red;
+    color: white;
+    margin: 5px;
 `
