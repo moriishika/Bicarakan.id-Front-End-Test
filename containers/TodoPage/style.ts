@@ -35,3 +35,11 @@ export const EmptyTask = styled(Title)`
     font-size : 30px;
     width : 100%;
 `
+
+export const SorterButtons = styled.div`
+    display : flex;
+    justify-content: space-around;
+    background-color : yellow;
+    width: 100%;
+    height : 50px;
+`

@@ -6,8 +6,8 @@ import { ITodo } from "../../interfaces/itodos";
 
 const Component = () => {
   const [todos, setTodos] = useState<ITodo[]>([]);
-
   const [newTodo, setNewTodo] = useState<string>("");
+  const [isNewest, setTimeSortStatus] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodo(e.target.value);
@@ -64,19 +64,47 @@ const Component = () => {
 
   const setDoneStatus = (id: string): void => {
     const updatedTodos: ITodo[] = [...todos];
-    const updatedTodo = todos.find(todo => todo.id === id );
+    const updatedTodo = todos.find((todo) => todo.id === id);
 
     updatedTodos.forEach((todo: ITodo, index) => {
-        //looking up for the same id and check if there is a data inside updatedTodo
-        if (todo.id === id && updatedTodo) {
-            //change the status isDone to true if false and vice verca
-            updatedTodo.isDone = updatedTodo.isDone ? false : true;
-            // overlap the data with the new one based on the index
-            updatedTodos[index] = updatedTodo;
-            setTodos([...updatedTodos]);
-        } 
-      });
+      //looking up for the same id and check if there is a data inside updatedTodo
+      if (todo.id === id && updatedTodo) {
+        //change the status isDone to true if false and vice verca
+        updatedTodo.isDone = updatedTodo.isDone ? false : true;
+        // overlap the data with the new one based on the index
+        updatedTodos[index] = updatedTodo;
+        setTodos([...updatedTodos]);
+      }
+    });
+  };
 
+  const sortByTime = (): void => {
+    const timeTodos : ITodo[] = [...todos];
+    //sort by the oldest and newest
+    setTodos(timeTodos.reverse());
+    //set sort by time status
+    setTimeSortStatus(isNewest ? false : true);
+  };
+
+  const sortAlphabetically = (): void => {
+    const alphabeticallyTodos : ITodo[] = [...todos];
+
+    alphabeticallyTodos.sort((a, b) => {
+      const todoA = a.description.toLowerCase();
+      const todoB = b.description.toLowerCase();
+
+      if (todoA < todoB) {
+        return -1;
+      }
+
+      if (todoB > todoA) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    setTodos([...alphabeticallyTodos]);
   };
 
   return (
@@ -90,6 +118,12 @@ const Component = () => {
           <input type="text" value={newTodo} onChange={handleChange} />
           <Styled.AddTodoButton> Add Todo </Styled.AddTodoButton>
         </form>
+
+        <Styled.SorterButtons>
+            <button onClick={sortByTime}>{isNewest ? 'Newest' : 'Oldest'}</button>
+            <button onClick={sortAlphabetically}>By Name</button>
+        </Styled.SorterButtons>
+        
         <Styled.Todos>
           {/* if there is no task a text will be shown */}
           {!todos.length && (
