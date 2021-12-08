@@ -1,5 +1,5 @@
 import * as Styled from "./style";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import Head from "next/head";
 import Todo from "../../components/Todo";
 import { ITodo } from "../../interfaces/itodos";
@@ -29,7 +29,7 @@ const Component = () => {
     setTodos([
       ...todos,
       {
-        id: new Date().getMilliseconds().toString(),
+        id: new Date().getTime().toString(),
         description: newTodo,
         isDone: false,
       },
@@ -79,11 +79,28 @@ const Component = () => {
   };
 
   const sortByTime = (): void => {
-    const timeTodos : ITodo[] = [...todos];
-    //sort by the oldest and newest
-    setTodos(timeTodos.reverse());
-    //set sort by time status
+    let timeTodos : ITodo[] = [...todos];
+    //iterating through all index one by one and one to another
+    for(let i : number = 0; i < timeTodos.length; i++){
+      for(let j : number = 0; j < timeTodos.length; j++){
+        // sort the todos from the oldest time the todo added by comparing the id that based on time
+        if(parseInt(timeTodos[i].id) > parseInt(timeTodos[j].id) && !isNewest){
+          let temp : ITodo = timeTodos[j];
+          //swapping the element 
+          timeTodos[j] = timeTodos[i];
+          timeTodos[i] = temp;
+        }
+        // sort the todos from the newest time the todo added by comparing the id that based on time        
+        else if(parseInt(timeTodos[i].id) < parseInt(timeTodos[j].id) && isNewest){
+          let temp : ITodo = timeTodos[j];
+          //swapping the element
+          timeTodos[j] = timeTodos[i];
+          timeTodos[i] = temp;
+        }
+      }
+    }
     setTimeSortStatus(isNewest ? false : true);
+    setTodos([...timeTodos])
   };
 
   const sortAlphabetically = (): void => {
@@ -107,6 +124,10 @@ const Component = () => {
     setTodos([...alphabeticallyTodos]);
   };
 
+  useEffect(() => {
+    console.log('Todo : ', todos);
+  }, [todos]);
+
   return (
     <>
       <Head>
@@ -120,8 +141,8 @@ const Component = () => {
         </form>
 
         <Styled.SorterButtons>
-            <button onClick={sortByTime}>{isNewest ? 'Newest' : 'Oldest'}</button>
-            <button onClick={sortAlphabetically}>By Name</button>
+            <Styled.SorterButton onClick={sortByTime}>{isNewest ? 'Newest' : 'Oldest'}</Styled.SorterButton>
+            <Styled.SorterButton onClick={sortAlphabetically}>By Name</Styled.SorterButton>
         </Styled.SorterButtons>
         
         <Styled.Todos>

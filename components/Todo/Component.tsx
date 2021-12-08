@@ -24,7 +24,7 @@ const Component = ({
         <Styled.Button onClick={() => setDoneStatus(id)}>{isDone ? '🔁' : '✔️'}</Styled.Button>
       </Styled.HorizontalBox>
       <Styled.VerticalBox>
-        <Styled.Description value={description} onChange={handleChange} />
+        <Styled.Description spellCheck={false} value={description} onChange={handleChange} />
         <Styled.StatusText>Status : {isDone ? "Done" : "On work"}</Styled.StatusText>
       </Styled.VerticalBox>
     </Styled.TodoCard>

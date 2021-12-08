@@ -38,8 +38,12 @@ export const EmptyTask = styled(Title)`
 
 export const SorterButtons = styled.div`
     display : flex;
-    justify-content: space-around;
+    justify-content: center;
     background-color : yellow;
     width: 100%;
     height : 50px;
+`
+export const SorterButton = styled.button`
+    margin-right: 10px;
+    margin-left : 10px;
 `
