@@ -14,6 +14,11 @@ export const Title = styled.h1`
   text-align: center;
 `;
 
+export const GuideText = styled.h3`
+font-size: 1rem;
+  text-align: center;
+`
+
 export const Todos = styled.div`
   display: flex;
   justify-content: center;
