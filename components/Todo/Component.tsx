@@ -20,8 +20,8 @@ const Component = ({
   return (
     <Styled.TodoCard id={id} description={description} isDone={isDone}>
       <Styled.HorizontalBox>
-        <Styled.Button onClick={() => removeTodo(id)}>🗑️</Styled.Button>
-        <Styled.Button onClick={() => setDoneStatus(id)}>{isDone ? '🔁' : '✔️'}</Styled.Button>
+        <Styled.Button onClick={() => removeTodo(id)}>❌</Styled.Button>
+        <Styled.Button onClick={() => setDoneStatus(id)}>{isDone ? '🔁' : '✅'}</Styled.Button>
       </Styled.HorizontalBox>
       <Styled.VerticalBox>
         <Styled.Description spellCheck={false} value={description} onChange={handleChange} />

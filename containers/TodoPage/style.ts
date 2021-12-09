@@ -20,7 +20,6 @@ export const Todos = styled.div`
   flex-wrap: wrap;
   width: 100%;
   padding: 5px;
-  margin-top: 30px;
 `;
 
 export const AddTodoButton = styled.button`
@@ -64,7 +63,7 @@ export const SorterButtons = styled.div`
   justify-content: center;
   width: 100%;
   height: 50px;
-  margin-top: 40px;
+  margin: 40px 0 20px 0;
 `;
 export const SorterButton = styled(AddTodoButton)`
   background-color: #4799B2;

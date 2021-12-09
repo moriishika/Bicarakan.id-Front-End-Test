@@ -147,7 +147,8 @@ const Component = () => {
             <Styled.SorterButton onClick={sortByTime}>{isNewest ? 'Newest' : 'Oldest'}</Styled.SorterButton>
             <Styled.SorterButton onClick={sortAlphabetically}>By Name</Styled.SorterButton>
         </Styled.SorterButtons>
-        
+        <h3>You can click the task detail and edit it</h3>
+
         <Styled.Todos>
           {/* if there is no task a text will be shown */}
           {!todos.length && (
